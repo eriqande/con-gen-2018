@@ -1,0 +1,22 @@
+---
+title: "Eric's Notes, Outlines, etc. From Con-Gen-2017"
+output: 
+  html_document:
+    toc: false
+    toc_float: false
+
+---
+
+A simple page linking to things related to ConGen2017.
+
+## Notes and things from Eric's First Presentation
+
+- [bayes-mcmc-gtyp-narrative.nb.html](bayes-mcmc-gtyp-narrative.nb.html). An R-notebook (in its
+HTML incarnation) of Eric's narrative notes for his first presentation.
+- [con-gen-2017 GitHub Repository](https://github.com/eriqande/con-gen-2017).  This would be the
+thing to clone if you wanted to reproduce
+`bayes-mcmc-gtyp-narrative.nb.html`. Do so by running the notebook at
+`./lectures/bayes-mcmc-gtyp-narrative.Rmd` in the repository
+- [gbs-miscall-rates repo](https://github.com/eriqande/gbs-miscall-rates). This is the GitHub 
+repository that holds all the code and the data sets used to estimate genotyping error rates in
+RAD data sets.

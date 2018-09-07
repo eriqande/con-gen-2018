@@ -1,0 +1,9 @@
+---
+title: "Hands On Session: Exploring genotyping error with R package 'whoa'"
+output: html_notebook
+author: "Eric C. Anderson"
+---
+
+Now we all have the chance to use Eric's R-package `whoa` to estimate
+heterozygote miscall rates from GBS data stored in VCF files.  
+
