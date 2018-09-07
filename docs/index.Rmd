@@ -1,17 +1,18 @@
 ---
 title: "Eric's Notes, Outlines, Hands-On Session, etc. From Con-Gen-2018"
 output: 
-  html_document:
+  html_notebook:
     toc: false
     toc_float: false
 
 ---
 
-A simple page linking to things related to ConGen2017.
+A simple page linking to things related to ConGen2018.
 
 ## Important links from Eric's First Presentation
 
-- [whoa_hands_on.nb.html](whoa_hands_on.nb.html) An R notebook to walk everyone through the
+- [whoa_hands_on.nb.html](whoa_hands_on.nb.html) An R notebook to walk 
+everyone through the
 hands-on session using the R package `whoa`.
 - [bayes-mcmc-gtyperr-narrative.nb.html](bayes-mcmc-gtyperr-narrative.nb.html). An R-notebook (in its
 HTML incarnation) of Eric's narrative notes for his first presentation.
@@ -19,7 +20,12 @@ HTML incarnation) of Eric's narrative notes for his first presentation.
 
 
 ## Important links from Eric's Second Presentation
-- [con-gen-2018 GitHub Repository](https://github.com/eriqande/con-gen-2017).  This would be the
-thing to clone if you wanted to reproduce
-`bayes-mcmc-gtyp-narrative.nb.html`. Do so by running the notebook at
-`./lectures/bayes-mcmc-gtyp-narrative.Rmd` in the repository
+
+- [microhaplot_hands_on.nb.html](microhaplot_hands_on.nb.html) An R
+notebook to walk everyone through the hands-on session using the 
+R package `microhaplot` for handling microhaplotype data.
+
+## Other relevant links
+- [con-gen-2018 GitHub Repository](https://github.com/eriqande/con-gen-2017).  All the materials
+that went into Eric's time at ConGen2018.
+- [open-science-eric.org](open-science-eric.org) Eric's web page.
