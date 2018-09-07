@@ -1,5 +1,5 @@
 ---
-title: "Eric's Notes, Outlines, etc. From Con-Gen-2017"
+title: "Eric's Notes, Outlines, Hands-On Session, etc. From Con-Gen-2018"
 output: 
   html_document:
     toc: false
@@ -9,14 +9,17 @@ output:
 
 A simple page linking to things related to ConGen2017.
 
-## Notes and things from Eric's First Presentation
+## Important links from Eric's First Presentation
 
-- [bayes-mcmc-gtyp-narrative.nb.html](bayes-mcmc-gtyp-narrative.nb.html). An R-notebook (in its
+- [whoa_hands_on.nb.html](whoa_hands_on.nb.html) An R notebook to walk everyone through the
+hands-on session using the R package `whoa`.
+- [bayes-mcmc-gtyperr-narrative.nb.html](bayes-mcmc-gtyperr-narrative.nb.html). An R-notebook (in its
 HTML incarnation) of Eric's narrative notes for his first presentation.
-- [con-gen-2017 GitHub Repository](https://github.com/eriqande/con-gen-2017).  This would be the
+
+
+
+## Important links from Eric's Second Presentation
+- [con-gen-2018 GitHub Repository](https://github.com/eriqande/con-gen-2017).  This would be the
 thing to clone if you wanted to reproduce
 `bayes-mcmc-gtyp-narrative.nb.html`. Do so by running the notebook at
 `./lectures/bayes-mcmc-gtyp-narrative.Rmd` in the repository
-- [gbs-miscall-rates repo](https://github.com/eriqande/gbs-miscall-rates). This is the GitHub 
-repository that holds all the code and the data sets used to estimate genotyping error rates in
-RAD data sets.

@@ -1,0 +1,8 @@
+---
+title: "Hands On Session: exploring microhaplotypes with 'microhaplot'"
+output: html_notebook
+author: Eric C. Anderson
+---
+
+Have to copy the material into here still.
+
