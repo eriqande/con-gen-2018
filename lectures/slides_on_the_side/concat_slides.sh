@@ -1,6 +1,6 @@
 
 
-PDFconcat --output slides_on_the_side.pdf ../diagrams/slide_simple1.pdf \
+PDFconcat --output testing.pdf ../diagrams/slide_simple1.pdf \
 	../slide_grabs/dag-notes.pdf \
 	../diagrams/slide_infer1.pdf \
 	../figures/beta_densities.pdf \

@@ -1,14 +1,80 @@
 ---
-title: "Bayesian Inference, MCMC, and Genotype Calling: A Narrative Outline"
+title: "Bayesian Inference, MCMC, and Genotyping Error: A Narrative Outline"
 output: 
   html_notebook:
     toc: true
     toc_float: true
 ---
 
-```{r}
+```{r results='hide'}
 library(tidyverse)
 ```
+
+## Preamble
+
+It is fantastic to be following Mike Miller this year.  Last year, I spent a lot of time
+talking about Bayesian inference, and Mike has taken care of many of those topics.  At the same
+time, last year I was unsure about the utility of probabilistic genotype calling for RAD-seq data.
+My feeling was that one should just be very careful with their RAD preps and get sufficiently high 
+read depth data.  My feelings about this have evolved over the last year.  As we will see at the 
+end of this session today, there are RAD data sets out there with evidence of very low genotyping
+error rates.  Nonetheless, when you break them down by read depth, there is still clear evidence 
+that heterozygotes are being missed at lower read depths.  So, really, even the cleanest, most
+carefully prepared and curated RAD data sets could benefit from probabilistic genotype calling.
+
+At the same time, there are clearly good reasons to be careful with your RAD preps.  There are
+lots of things that can go wrong!  And probabilistic genotype calling might not remedy all of 
+those issues.
+
+So, my plan for this session is to pick up from where Mike brought us and focus a little
+bit on making inference when multiple levels in a hierarchical Bayesian model are unobserved
+(i.e., are in need of being inferred/estimated.)  This will provide us a chance to talk 
+more about Markov chain Monte Carlo, which, although it is not employed heavily in 
+ANGSD (they tend to maximize the posterior) is an important technique to know about, and 
+I use it extensively in estimating genotyping error rates.  We will do this by considering
+the problem of jointly estimating the allele frequencies and the genotype frequencies.
+
+First, we'll talk about estimating the allele frequencies alone:
+
+1. Introduce acyclic directed graphs (DAGs)
+1. Talk about proportionality to the joint probability (a nice perspective)
+1. Show what inference of allele frequencies looks like if you 
+   know the genotypes exactly.
+1. Talk about how we could learn about the posterior by simulating
+   values from it.  Whether they were correlated (MCMC) or not (vanilla 
+   Monte Carlo).
+
+After that we will put another layer into the model.  
+
+1. Add in the idea that genotypes are not observed directly, but rather
+   underlie counts of reads of different alleles.
+1. Show that computing the posterior distribution in this case
+   is much more complicated (i.e. MCMC really helps here!)
+1. Talk about component-wise MCMC and *Gibbs sampling*
+1. Have a little digression into the program *structure* so 
+   we can see what Gibbs sampling looks like.
+
+From there we will have the tools necessary to consider another
+set of models---ones that use the observed genotype calls to estimate
+a type of genotyping error that I call a "heterozygote miscall." In this
+case we will
+
+1. Motivate the problem by encountering some plots of expected vs observed
+genotype frequencies in RAD seq data that are a little concerning.
+1. Develop a simple model to estimate the overall heterozygote miscall rate
+and see what that value is for a few data sets.
+1. Extend the model to estimate het miscall rate as a function of read depth
+and see that even the best of the data sets have moderately high
+genotyping error at lower read depths.
+
+
+After that, the remainder of the session will be spent letting people 
+evaluate data sets that they might have laying around in VCF format,
+making plots and estimating heterozygote miscall rates using my 
+R package `whoa`.
+
+
+
 
 ## Bayesian Inference
 
@@ -1050,6 +1116,8 @@ much sense.
 
 
 
+
+## Old Stuff Put at the End For Now
 
 
 
