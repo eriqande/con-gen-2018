@@ -1,9 +1,251 @@
 ---
 title: "Hands On Session: Exploring genotyping error with R package 'whoa'"
-output: html_notebook
+output: 
+  html_notebook:
+    toc: true
 author: "Eric C. Anderson"
 ---
 
+## Introduction
+
 Now we all have the chance to use Eric's R-package `whoa` to estimate
 heterozygote miscall rates from GBS data stored in VCF files.  
+
+This is a small, lightweight package that lets users investigate the
+distribution of genotypes in genotype-by-sequencing (GBS) data where they expect (by and large)
+Hardy-Weinberg equilibrium, in order to assess rates of genotyping errors and
+the dependence of those rates on read depth.
+
+The name comes from the bolded letters in this sentence:
+
+**W**here's my **H**eterozygotes at?  **O**bservations on genotyping **A**ccuracy.
+
+It also fits well with Eric's reaction when he started investigating 
+heterozygote miscall rates (rates at which true heterozygotes are
+incorrectly called as homozygotes) in some RAD-seq data sets---His eyes
+bugged out and he said, "Whoa!"
+
+## Installing `whoa`
+
+Unfortunately, CRAN was shuttered this last week, so we were not able to get
+this package onto CRAN.  So, there are a few options:
+
+### Option 1: From github
+
+If you have all the tools to compile R packages that use C++ code on your computer
+then this option is fine.
+```{r, eval = FALSE}
+devtools::install_github(repo = "eriqande/whoa")
+```
+
+### Option 2: Precompiled versions for Mac and Windows
+
+If you are working on a Linux machine than you probably have all the
+tools for compiling packages with C++.  However, not all Mac and Windows
+users will have that capacity, so I have some precompiled binary packages
+for those users. 
+
+First, you will have to ensure that all the dependencies (necessary other packages) 
+are also installed. If you think you don't have the packages, you can 
+install them easily with:
+```{r, eval=FALSE}
+install.packages(c("tidyverse", "Rcpp", "vcfR", "viridis"))
+```
+
+Then, depending on if you are a Mac or a Windows user there are two
+further options.
+
+#### Installing the binary for Mac OS X
+```{r, eval=FALSE}
+# download the package 
+download.file("https://www.dropbox.com/s/cnc6rfqe8afp8fd/whoa_0.0.1.tgz?dl=1", 
+              destfile = "whoa_0.0.1.tgz")
+
+# then install the package
+install.packages("whoa_0.0.1.tgz", repos = NULL)
+```
+
+
+#### Installing the binary for Windows
+```{r, eval=FALSE}
+# download the package 
+download.file("https://www.dropbox.com/s/cnc6rfqe8afp8fd/whoa_0.0.1.zip?dl=1", 
+              destfile = "whoa_0.0.1.zip")
+
+# then install the package
+install.packages("whoa_0.0.1.zip", repos = NULL)
+```
+
+
+## A first run through
+
+The package comes with a small bit of data from lobster to play with.  The rest of 
+this document shows a quick run through a few of the functions to do an 
+analysis of a data set.
+
+
+### Packages
+
+```{r}
+# load up the package:
+library(whoa)
+
+```
+
+### Lobster data
+
+Read about the lobster data here. Execute this if you want:
+```{r, eval=FALSE}
+help("lobster_buz_2000")
+```
+The main thing to know is that it is a vcfR object.  You can 
+make such an object yourself by reading in a VCF file 
+using `vcfR::read.vcfR()`.
+
+### Make a quick genotype frequency scatter plot
+
+```{r}
+# first get compute expected and observed genotype frequencies
+gfreqs <- exp_and_obs_geno_freqs(lobster_buz_2000)
+
+# then plot those.  Set max_plot_loci so that all 2000
+# loci will be plotted
+geno_freqs_scatter(gfreqs, max_plot_loci = 2000)
+```
+
+### Now infer an overall heterozygote miscall rate.
+
+If we want to estimate the het miscall rate (over all read depth bins)
+we just set the minimum bin size to a very large value so it make just one bin:
+```{r}
+overall <- infer_m(lobster_buz_2000, minBin = 1e15)
+```
+Now look at that:
+```{r}
+overall$m_posteriors
+```
+
+Wow! (Or should we say "WHOA!") A het miscall rate of around 25%.
+
+### Now infer a miscall rate for read depth bins
+
+See the total_n above is about 65,000.  That means 65,000 genotypes. 
+(2000 loci typed at 36 individuals, with some missing data).  
+We will bin those up so that there are at least 2000 genotypes in each 
+bin and then estimate the het miscall rate for each read depth bin.
+
+```{r}
+binned <- infer_m(lobster_buz_2000, minBin = 2000)
+```
+
+And then we can plot the posterior mean and CIs for each read depth bin.
+```{r}
+posteriors_plot(binned$m_posteriors)
+```
+
+Again, WHOA!  The het miscall rate at low read depths is super high!
+
+
+## Another analysis from a VCF file
+
+Now, let's look at doing this while beginning with a VCF file.
+
+For those that aren't familiar with VCF files (that stands for Variant
+Call Format), you will want to get to know the format well.  It is one of the
+main standards for storing information about SNPs (and other variants) 
+that were obtained from sequencing.  It allows the storage of extra information
+like variant quality scores and read depths.  You can read more about VCF formats
+[on Wikipedia](https://en.wikipedia.org/wiki/Variant_Call_Format).
+
+### Download a VCF file
+
+We can get the red-drum data like this:
+```{r, eval=FALSE}
+download.file("https://www.dropbox.com/s/twyylsui15q65yj/red_drum_Final_Filtered_SNPs.vcf.gz?dl=1",
+              destfile = "red_drum_Final_Filtered_SNPs.vcf.gz")
+```
+
+This is a gzipped file, so it is a little hard to look at.  Here is what the first
+20 lines of the file look like:
+```{sh}
+gzcat red_drum_Final_Filtered_SNPs.vcf.gz | head -n 20
+```
+
+### Read in the VCF file
+
+We use `read.vcfR()` from the vcfR package for this
+```{r}
+drum_vcf <- vcfR::read.vcfR("red_drum_Final_Filtered_SNPs.vcf.gz")
+```
+
+### Analysis
+
+From this point on, its just the same as we did with the lobster data:
+```{r}
+# first get compute expected and observed genotype frequencies
+drumfreqs <- exp_and_obs_geno_freqs(drum_vcf)
+
+# then plot those.  Set max_plot_loci so that all 2000
+# loci will be plotted
+geno_freqs_scatter(drumfreqs, max_plot_loci = 5000)
+```
+
+That looks a lot better...
+
+Now, how about an overall het miscall rate?
+```{r, cache=TRUE}
+drum_overall <- infer_m(drum_vcf, minBin = 1e15)
+
+drum_overall$m_posteriors
+```
+
+That takes a bit longer (more individuals), but the results are good---about a 5% het
+miscall rate.
+
+But note that the miscall rate is clearly higher at lower read depths.
+
+First, check how many individuals and how many loci we have here:
+```{r}
+dim(drum_vcf@gt)
+```
+So, 7382 loci and 205 individuals.  That means close to 1.5 million genotypes.
+So, if we want to break that up into read depth bins, we could put 50,000 in each bin and still
+have a large number of bins:
+```{r, cache=TRUE}
+drum_binned <- infer_m(drum_vcf, minBin = 50000)
+
+posteriors_plot(drum_binned$m_posteriors)
+```
+And we see a clear trend there.
+
+## Now, please use your own data set
+
+If you have RAD data in vcf format lying around, please run it through `whoa`!
+
+Note that if you have multiple, genetically distinct populations in your VCF,
+you can select individuals from just one population by indexing them
+out of the vcfR object.  For example, if we wanted only a subset of samples from the 
+drum VCF file we could do like this:
+```{r}
+sams <- c("AR_001", 
+          "AR_003",
+          "AR_004",
+          "AR_005",
+          "AR_008",
+          "AR_010",
+          "AR_012",
+          "AR_014",
+          "AR_015",
+          "AR_016")
+
+drum_subset <- drum_vcf[, c("FORMAT", sams)]
+
+# check the dimensions of the genotypes in that object:
+dim(drum_subset@gt)
+```
+
+Notice how you have to include the column "FORMAT" when you index the
+object.  This is critical---that is the column that tells you how all the 
+auxillary information that comes with the genotypes (like read depths and 
+quality scores) is formatted.
 
