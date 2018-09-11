@@ -178,10 +178,60 @@ $(document).ready(function () {
 
 
 <!-- rnb-text-begin -->
-<p>Have to copy the material into here still.</p>
+<p>The R-package program <code>microhaplot</code> provides functionality to extract microhaplotypes from aligned reads in .sam files, and to display information about reads containing microhaplotypes in a variety of useful visualizations. The goals is to give users the chance to dig into the patterns in their data and assess the quality of data at different microhaplotype loci.</p>
+<div id="installation" class="section level2">
+<h2>Installation</h2>
+<p>This R package can be installed from GitHub:</p>
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGV2dG9vbHM6Omluc3RhbGxfZ2l0aHViKFwibmd0aG9tYXMvbWljcm9oYXBsb3RcIiwgYnVpbGRfdmlnbmV0dGVzID0gVFJVRSlcbmBgYCJ9 -->
+<pre class="r"><code>devtools::install_github(&quot;ngthomas/microhaplot&quot;, build_vignettes = TRUE)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="known-issues" class="section level3">
+<h3>Known issues</h3>
+<ul>
+<li>If you are working on a mac and just upgraded to a new major version of R, you should also reinstall <a href="https://www.xquartz.org/">XQuartz</a>.</li>
+<li>If you are working on windows and are using R 3.5.1, things won’t work out because <code>microhaplot</code> makes use of the <code>feather</code> package, which is currently not built for 3.5.1. :-(.</li>
+</ul>
+</div>
+</div>
+<div id="after-installing-some-steps-to-launch-it" class="section level2">
+<h2>After installing some steps to launch it</h2>
+<p>You have to load the package, move the Shiny app materials to a good location and then launch the Shiny app:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBwcm92aWRlIGEgZGlyZWN0b3J5IHBhdGggdG8gaG9zdCB0aGUgaGFQTE9UeXBlIGFwcFxubWljcm9oYXBsb3Q6Om12SGFwbG90eXBlKFwifi9TaGlueVwiKVxuXG4jIGxhdW5jaCB0aGUgU2hpbnkgYXBwOlxubGlicmFyeShtaWNyb2hhcGxvdClcbmFwcC5wYXRoIDwtIFwifi9TaGlueS9taWNyb2hhcGxvdFwiXG5ydW5IYXBsb3R5cGUoYXBwLnBhdGgpXG5cbmBgYCJ9 -->
+<pre class="r"><code># provide a directory path to host the haPLOType app
+microhaplot::mvHaplotype(&quot;~/Shiny&quot;)
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiSGFuZHMgT24gU2Vzc2lvbjogZXhwbG9yaW5nIG1pY3JvaGFwbG90eXBlcyB3aXRoICdtaWNyb2hhcGxvdCciCm91dHB1dDogaHRtbF9ub3RlYm9vawphdXRob3I6IEVyaWMgQy4gQW5kZXJzb24KLS0tCgpIYXZlIHRvIGNvcHkgdGhlIG1hdGVyaWFsIGludG8gaGVyZSBzdGlsbC4KCg==</div>
+# launch the Shiny app:
+library(microhaplot)
+app.path &lt;- &quot;~/Shiny/microhaplot&quot;
+runHaplotype(app.path)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Now, you can follow along with the first vignette:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudmlnbmV0dGUoXCJoYVBMT1R5cGUtd2Fsa3Rocm91Z2hcIilcbmBgYCJ9 -->
+<pre class="r"><code>vignette(&quot;haPLOType-walkthrough&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>If you want more background on preparing your data for microhaplot try this:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>I will spend a little time showing a new feature that is mostly undocumented—the “Scatter Analysis,” which was suggested by Phil Morin, and is a great way of looking at the data.</p>
+<!-- rnb-text-end -->
+</div>
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiSGFuZHMgT24gU2Vzc2lvbjogZXhwbG9yaW5nIG1pY3JvaGFwbG90eXBlcyB3aXRoICdtaWNyb2hhcGxvdCciCm91dHB1dDogaHRtbF9ub3RlYm9vawphdXRob3I6IEVyaWMgQy4gQW5kZXJzb24KLS0tCgoKVGhlIFItcGFja2FnZSBwcm9ncmFtIGBtaWNyb2hhcGxvdGAgcHJvdmlkZXMgZnVuY3Rpb25hbGl0eSB0byBleHRyYWN0IAptaWNyb2hhcGxvdHlwZXMgZnJvbSBhbGlnbmVkIHJlYWRzIGluIC5zYW0gZmlsZXMsIGFuZCB0byBkaXNwbGF5CmluZm9ybWF0aW9uIGFib3V0IHJlYWRzIGNvbnRhaW5pbmcgbWljcm9oYXBsb3R5cGVzIGluIGEgdmFyaWV0eSBvZiAKdXNlZnVsIHZpc3VhbGl6YXRpb25zLiAgVGhlIGdvYWxzIGlzIHRvIGdpdmUgdXNlcnMgdGhlIGNoYW5jZSB0byBkaWcKaW50byB0aGUgcGF0dGVybnMgaW4gdGhlaXIgZGF0YSBhbmQgYXNzZXNzIHRoZSBxdWFsaXR5IG9mIGRhdGEgYXQgZGlmZmVyZW50Cm1pY3JvaGFwbG90eXBlIGxvY2kuCgojIyBJbnN0YWxsYXRpb24KClRoaXMgUiBwYWNrYWdlIGNhbiBiZSBpbnN0YWxsZWQgZnJvbSBHaXRIdWI6CmBgYHtyfQpkZXZ0b29sczo6aW5zdGFsbF9naXRodWIoIm5ndGhvbWFzL21pY3JvaGFwbG90IiwgYnVpbGRfdmlnbmV0dGVzID0gVFJVRSkKYGBgCgojIyMgS25vd24gaXNzdWVzCgoqIElmIHlvdSBhcmUgd29ya2luZyBvbiBhIG1hYyBhbmQganVzdCB1cGdyYWRlZCB0byBhIG5ldyBtYWpvciB2ZXJzaW9uIG9mIApSLCB5b3Ugc2hvdWxkIGFsc28gcmVpbnN0YWxsIFtYUXVhcnR6XShodHRwczovL3d3dy54cXVhcnR6Lm9yZy8pLiAKKiBJZiB5b3UgYXJlIHdvcmtpbmcgb24gd2luZG93cyBhbmQgYXJlIHVzaW5nIFIgMy41LjEsIHRoaW5ncyB3b24ndCB3b3JrCm91dCBiZWNhdXNlIGBtaWNyb2hhcGxvdGAgbWFrZXMgdXNlIG9mIHRoZSBgZmVhdGhlcmAgcGFja2FnZSwgd2hpY2ggaXMgY3VycmVudGx5Cm5vdCBidWlsdCBmb3IgMy41LjEuICA6LSguCgojIyBBZnRlciBpbnN0YWxsaW5nIHNvbWUgc3RlcHMgdG8gbGF1bmNoIGl0CgpZb3UgaGF2ZSB0byBsb2FkIHRoZSBwYWNrYWdlLCBtb3ZlIHRoZSBTaGlueSBhcHAgbWF0ZXJpYWxzIHRvIGEgZ29vZCBsb2NhdGlvbgphbmQgdGhlbiBsYXVuY2ggdGhlIFNoaW55IGFwcDoKYGBge3J9CiMgcHJvdmlkZSBhIGRpcmVjdG9yeSBwYXRoIHRvIGhvc3QgdGhlIGhhUExPVHlwZSBhcHAKbWljcm9oYXBsb3Q6Om12SGFwbG90eXBlKCJ+L1NoaW55IikKCiMgbGF1bmNoIHRoZSBTaGlueSBhcHA6CmxpYnJhcnkobWljcm9oYXBsb3QpCmFwcC5wYXRoIDwtICJ+L1NoaW55L21pY3JvaGFwbG90IgpydW5IYXBsb3R5cGUoYXBwLnBhdGgpCgpgYGAKCgpOb3csIHlvdSBjYW4gZm9sbG93IGFsb25nIHdpdGggdGhlIGZpcnN0IHZpZ25ldHRlOgpgYGB7cn0KdmlnbmV0dGUoImhhUExPVHlwZS13YWxrdGhyb3VnaCIpCmBgYAoKSWYgeW91IHdhbnQgbW9yZSBiYWNrZ3JvdW5kIG9uIHByZXBhcmluZyB5b3VyIGRhdGEgZm9yIG1pY3JvaGFwbG90IHRyeSB0aGlzOgpgYGB7cn0KdmlnbmV0dGUoImhhUExPVC1kYXRhLXByZXAiKQpgYGAKCgpJIHdpbGwgc3BlbmQgYSBsaXR0bGUgdGltZSBzaG93aW5nIGEgbmV3IGZlYXR1cmUgdGhhdCBpcyBtb3N0bHkgdW5kb2N1bWVudGVkLS0tdGhlCiJTY2F0dGVyIEFuYWx5c2lzLCIgd2hpY2ggd2FzIHN1Z2dlc3RlZCBieSBQaGlsIE1vcmluLCBhbmQgaXMgYSBncmVhdCB3YXkgb2YgbG9va2luZyBhdCAKdGhlIGRhdGEuCg==</div>
 
 
 
