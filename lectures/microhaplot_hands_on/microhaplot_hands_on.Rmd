@@ -49,7 +49,7 @@ vignette("haPLOType-walkthrough")
 ```
 
 If you want more background on preparing your data for microhaplot try this:
-```{r}
+```{r, eval=FALSE}
 vignette("haPLOT-data-prep")
 ```
 
