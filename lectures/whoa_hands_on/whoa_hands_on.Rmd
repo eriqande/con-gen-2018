@@ -69,7 +69,7 @@ install.packages("whoa_0.0.1.tgz", repos = NULL)
 #### Installing the binary for Windows
 ```{r, eval=FALSE}
 # download the package 
-download.file("https://www.dropbox.com/s/cnc6rfqe8afp8fd/whoa_0.0.1.zip?dl=1", 
+download.file("https://www.dropbox.com/s/f48h75oft1rlzr8/whoa_0.0.1.zip?dl=1", 
               destfile = "whoa_0.0.1.zip")
 
 # then install the package
